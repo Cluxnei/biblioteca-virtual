@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Yara Cluxnei',
             'email' => 'yara@cluxnei.com',
             'password' => Hash::make('yara@123'),
+            'is_admin' => 1,
         ]);
 
         Ebook::factory()

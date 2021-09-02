@@ -19,9 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(static function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/ebook/{ebook}', [HomeController::class, 'show'])->name('ebook.show');
+});
 
-Route::prefix('dashboard')->middleware('auth')->name('dashboard.')->group(static function () {
+Route::prefix('dashboard')->middleware(['auth', 'admin'])->name('dashboard.')->group(static function () {
     Route::get('/', [DashboardController::class, 'index'])->name('home');
     Route::resource('ebook', EbookController::class);
 });
