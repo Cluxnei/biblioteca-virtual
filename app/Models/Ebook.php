@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class Ebook extends Model
 {
 
-    private const _SHORT_ATTR_LEN = 40;
+    private const _SHORT_ATTR_LEN = 15;
 
     use SoftDeletes, HasFactory;
 
@@ -60,7 +60,7 @@ class Ebook extends Model
             return $this->getOriginal('description');
         }
 
-        return substr($this->getOriginal('description'), 0, 40) . '...';
+        return substr($this->getOriginal('description'), 0, self::_SHORT_ATTR_LEN) . '...';
     }
 
     public function getShortTitleAttribute(): string
@@ -71,7 +71,7 @@ class Ebook extends Model
             return $this->getOriginal('title');
         }
 
-        return substr($this->getOriginal('title'), 0, 30) . '...';
+        return substr($this->getOriginal('title'), 0, self::_SHORT_ATTR_LEN) . '...';
     }
 
     public function getPhotoUrlAttribute(): string

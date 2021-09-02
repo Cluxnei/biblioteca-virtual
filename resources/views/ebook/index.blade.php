@@ -6,14 +6,37 @@
     <h1 class="m-0 text-dark">Todos os <b>E-books</b></h1>
 @stop
 
+@section('js')
+    <script type="text/javascript">
+        $(() => {
+            $('form input[name="_method"][value="DELETE"]').each((_, e) => {
+                $(e).closest('form').on('submit', async function (event) {
+                    event.preventDefault();
+                    const {value} = await Swal.fire({
+                        title: 'Tem certeza?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sim, delete isso!'
+                    });
+                    if (value) {
+                        this.submit();
+                    }
+                });
+            });
+        });
+    </script>
+@stop
+
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <form action="{{ route('dashboard.ebook.index') }}" method="get">
+                        <div class="input-group input-group-sm" style="width: 450px;">
+                            <form action="{{ route('dashboard.ebook.index') }}" method="get" style="width: 100%;">
                                 <div class="input-group-append">
                                     <input value="{{ $q }}" type="text" name="q" class="form-control float-right"
                                            placeholder="Pesquisa">
@@ -52,8 +75,19 @@
                                 <td>{!! $ebook->genres->pluck('name')->implode(',<br>') !!}</td>
                                 <td>{{ $ebook->short_description }}</td>
                                 <td>{{ $ebook->comments_count }}</td>
-                                <td>{{ $ebook->created_at->format('d/m/y') }}
-                                    - {{ $ebook->created_at->diffForHumans() }}</td>
+                                <td>
+                                    {{ $ebook->created_at->format('d/m/y') }}
+                                    <br>
+                                    {{ $ebook->created_at->diffForHumans() }}
+                                    <br>
+                                    <form action="{{ route('dashboard.ebook.destroy', $ebook->id) }}" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt" aria-hidden="true"></i>&nbsp;&nbsp;excluir
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -14,15 +14,6 @@
             });
         });
     </script>
-    @if(\Illuminate\Support\Facades\Session::has('success'))
-        <script type="text/javascript">
-            @if (\Illuminate\Support\Facades\Session::get('success'))
-            Swal.fire('Sucesso', 'Ação finalizada com sucesso', 'success');
-            @else
-            Swal.fire('Ops...', 'Ocorreu um problema ao finalizar sua ação', 'error');
-            @endif
-        </script>
-    @endif
 @stop
 
 @section('content')

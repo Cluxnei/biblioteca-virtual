@@ -143,4 +143,9 @@ class EbookController extends Controller
         return $id[0] !== '|';
     }
 
+    public function destroy(Ebook $ebook): RedirectResponse
+    {
+        return redirect()->route('dashboard.ebook.index')->with('success', $ebook->delete());
+    }
+
 }
