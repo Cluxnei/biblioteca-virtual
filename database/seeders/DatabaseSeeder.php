@@ -26,13 +26,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('yara@123'),
         ]);
 
-        Author::factory()->count(500)->create();
-        Genre::factory()->count(500)->create();
-        Comment::factory()->count(500)->create();
-        Category::factory()->count(500)->create();
-
-        Ebook::factory()->count(5)->create();
-
         Ebook::factory()
             ->has(Author::factory()->count(3), 'authors')
             ->has(Genre::factory()->count(3), 'genres')
@@ -40,6 +33,13 @@ class DatabaseSeeder extends Seeder
             ->has(Category::factory()->count(3), 'categories')
             ->count(1000)
             ->create();
+
+        Ebook::factory()->count(5)->create();
+
+        Author::factory()->count(500)->create();
+        Genre::factory()->count(500)->create();
+        Comment::factory()->count(500)->create();
+        Category::factory()->count(500)->create();
 
     }
 }
