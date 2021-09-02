@@ -13,11 +13,15 @@
                 <div class="card-header">
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-default" onclick="window.find();">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
+                            <form action="{{ route('dashboard.ebook.index') }}" method="get">
+                                <div class="input-group-append">
+                                    <input value="{{ $q }}" type="text" name="q" class="form-control float-right"
+                                           placeholder="Pesquisa">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -27,10 +31,13 @@
                         <thead>
                         <tr>
                             <th>Foto</th>
-                            <th>ID</th>
                             <th>Título</th>
                             <th>Ano</th>
+                            <th>Autores</th>
+                            <th>Categorias</th>
+                            <th>Gêneros</th>
                             <th>Descrição</th>
+                            <th>Comentários</th>
                             <th>Incluído em</th>
                         </tr>
                         </thead>
@@ -38,10 +45,13 @@
                         @foreach($ebooks as $ebook)
                             <tr>
                                 <td><img src="{{ $ebook->photoUrl }}" alt="{{ $ebook->id }}" width="100"/></td>
-                                <td>{{ $ebook->id }}</td>
                                 <td>{{ $ebook->short_title }}</td>
                                 <td>{{ $ebook->year }}</td>
+                                <td>{!! $ebook->authors->pluck('name')->implode(',<br>') !!}</td>
+                                <td>{!! $ebook->categories->pluck('name')->implode(',<br>') !!}</td>
+                                <td>{!! $ebook->genres->pluck('name')->implode(',<br>') !!}</td>
                                 <td>{{ $ebook->short_description }}</td>
+                                <td>{{ $ebook->comments_count }}</td>
                                 <td>{{ $ebook->created_at->format('d/m/y') }}
                                     - {{ $ebook->created_at->diffForHumans() }}</td>
                             </tr>
