@@ -16,4 +16,6 @@ return [
     'Important' => 'Importante',
     'Warning' => 'Aviso',
     'Information' => 'Informação',
+    'add new e-book' => 'Adicionar novo',
+    'list of e-books' => 'Listar todos',
 ];
