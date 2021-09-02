@@ -8,8 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @method static self create(array $array)
+ */
 class Ebook extends Model
 {
+
+    private const _SHORT_ATTR_LEN = 40;
+
     use SoftDeletes, HasFactory;
 
     protected $table = 'ebooks';
@@ -48,11 +54,23 @@ class Ebook extends Model
 
     public function getShortDescriptionAttribute(): string
     {
+        $len = strlen($this->getOriginal('description'));
+
+        if ($len <= self::_SHORT_ATTR_LEN) {
+            return $this->getOriginal('description');
+        }
+
         return substr($this->getOriginal('description'), 0, 40) . '...';
     }
 
     public function getShortTitleAttribute(): string
     {
+        $len = strlen($this->getOriginal('title'));
+
+        if ($len <= self::_SHORT_ATTR_LEN) {
+            return $this->getOriginal('title');
+        }
+
         return substr($this->getOriginal('title'), 0, 30) . '...';
     }
 

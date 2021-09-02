@@ -12,6 +12,8 @@ class Comment extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = ['message', 'user_id'];
+
     public function ebooks(): BelongsToMany
     {
         return $this->belongsToMany(Ebook::class, 'ebooks_comments', 'comment_id', 'ebook_id')
